@@ -20,9 +20,9 @@ const Task = mongoose.model('Task', new mongoose.Schema({
 app.get('/tasks', async (req, res) => {
     const tasks = await Task.find();
     res.json(tasks);
-})
+});
 
-app.post('/task', async (req, res) => {
+app.post('/tasks', async (req, res) => {
     const task = await Task.create(req.body);
     res.json(task);
 });
@@ -50,7 +50,7 @@ const connectWithRetry = () => {
             console.log(`Backend running on port ${PORT}`); 
         });
     })
-    .catch(() => {
+    .catch(err => {
         console.error('MongoDB connection error. Retrying in 5s...', err.message);
         setTimeout(connectWithRetry,5000);
     });
