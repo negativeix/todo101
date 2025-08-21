@@ -14,6 +14,17 @@ jobs:
       - name: 🛎️ Checkout repository
         uses: actions/checkout@v3
 
+      # Debug: ตรวจสอบว่า Secret ส่งมาจริงไหม
+      - name: 🐛 Debug secret length
+        run: echo "Token length is ${#DOCKER_HUB_TOKEN}"
+        env:
+          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Debug: ลอง login ด้วย docker command โดยตรง
+      - name: 🐛 Test manual docker login
+        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u negativeix --password-stdin
+
+      # Login ด้วย action (ตามที่อาจารย์ให้ใช้ v2)
       - name: 🔑 Log in to Docker Hub
         uses: docker/login-action@v2
         with:
